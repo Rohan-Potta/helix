@@ -68,7 +68,7 @@ There is no service/repository layer — for two tables and five-ish endpoints e
 
 ### Enums
 
-Stored as `VARCHAR`, not native Postgres enums (`native_enum=False`) so Alembic migrations stay simple.
+Stored as native Postgres `ENUM` types (`taskstatus`, `taskpriority`), created in [`f77ab71235be_convert_task_status_and_priority_to_.py`](../backend/alembic/versions/f77ab71235be_convert_task_status_and_priority_to_.py). This was originally plain `VARCHAR` — native enums were avoided at first because adding a new value later needs a hand-written migration (autogenerate doesn't detect column *type* changes without `compare_type=True` in `env.py`): you have to `CREATE TYPE`, then `ALTER COLUMN ... TYPE ... USING ...` to cast the existing column, which Alembic won't write for you. That migration is the template to copy if another value is ever added.
 
 | Enum | Values |
 |---|---|

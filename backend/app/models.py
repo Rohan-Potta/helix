@@ -45,12 +45,12 @@ class Task(Base):
     title: Mapped[str] = mapped_column(String(200), nullable=False)
     description: Mapped[str | None] = mapped_column(Text, nullable=True)
     status: Mapped[TaskStatus] = mapped_column(
-        Enum(TaskStatus, native_enum=False, length=20, values_callable=lambda e: [m.value for m in e]),
+        Enum(TaskStatus, name="taskstatus", values_callable=lambda e: [m.value for m in e]),
         nullable=False,
         default=TaskStatus.TODO,
     )
     priority: Mapped[TaskPriority] = mapped_column(
-        Enum(TaskPriority, native_enum=False, length=20, values_callable=lambda e: [m.value for m in e]),
+        Enum(TaskPriority, name="taskpriority", values_callable=lambda e: [m.value for m in e]),
         nullable=False,
         default=TaskPriority.MEDIUM,
     )
